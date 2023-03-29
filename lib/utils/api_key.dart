@@ -1,0 +1,2 @@
+const String SUPABASE_URL = "SUPABASE_URL";
+const String SUPABASE_ANON_KEY = "SUPABASE_ANON_KEY";
