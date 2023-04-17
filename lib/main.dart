@@ -1,4 +1,5 @@
 import 'package:chatapp_supabase/pages/splash_page.dart';
+import 'package:chatapp_supabase/utils/api_key.dart';
 import 'package:chatapp_supabase/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,8 +12,8 @@ Future<void> main() async {
 
   await Supabase.initialize(
     // TODO: Replace credentials with your own
-    url: 'https://lvjnjqaqipfcxqskohee.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2am5qcWFxaXBmY3hxc2tvaGVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODE2NTc3OTIsImV4cCI6MTk5NzIzMzc5Mn0.6wGvUEJ-vsxk2rX4eb8Z23rtwx17O-yoEMSJOUpbY6A',
+    url: SUPABASE_URL,
+    anonKey: SUPABASE_ANON_KEY,
     authCallbackUrlHostname: 'login',
   );
 
