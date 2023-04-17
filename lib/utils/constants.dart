@@ -9,7 +9,7 @@ const preloader =
     Center(child: CircularProgressIndicator(color: Colors.orange));
 
 /// Simple sized box to space out form elements
-const formSpacer = SizedBox(width: 16, height: 16);
+const spacer = SizedBox(width: 16, height: 16);
 
 /// Some padding for all the forms to use
 const formPadding = EdgeInsets.symmetric(vertical: 20, horizontal: 16);
@@ -68,7 +68,7 @@ extension ShowSnackBar on BuildContext {
   /// Displays a basic snackbar
   void showSnackBar({
     required String message,
-    Color backgroundColor = Colors.white,
+    Color? backgroundColor,
   }) {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(
       content: Text(message),

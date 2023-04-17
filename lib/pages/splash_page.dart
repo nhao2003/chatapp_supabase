@@ -1,10 +1,10 @@
 import 'package:chatapp_supabase/pages/register_page.dart';
+import 'package:chatapp_supabase/pages/rooms_page.dart';
+import 'package:chatapp_supabase/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../utils/constants.dart';
-import 'chat_page.dart';
-
-/// Page to redirect users to the appropriate page depending on the initial auth state
+/// Page to redirect users to the appropreate page depending on the initial auth state
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 
@@ -15,26 +15,36 @@ class SplashPage extends StatefulWidget {
 class SplashPageState extends State<SplashPage> {
   @override
   void initState() {
+    getInitialSession();
     super.initState();
-    _redirect();
   }
 
-  Future<void> _redirect() async {
-    // await for for the widget to mount
+  Future<void> getInitialSession() async {
+    // quick and dirty way to wait for the widget to mount
     await Future.delayed(Duration.zero);
 
-    final session = supabase.auth.currentSession;
-    if (session == null) {
+    try {
+      final session = await SupabaseAuth.instance.initialSession;
+      if (session == null) {
+        Navigator.of(context)
+            .pushAndRemoveUntil(RegisterPage.route(), (_) => false);
+      } else {
+        Navigator.of(context)
+            .pushAndRemoveUntil(RoomsPage.route(), (_) => false);
+      }
+    } catch (_) {
+      context.showErrorSnackBar(
+        message: 'Error occured during session refresh',
+      );
       Navigator.of(context)
-          .pushAndRemoveUntil(RegisterPage.route(), (route) => false);
-    } else {
-      Navigator.of(context)
-          .pushAndRemoveUntil(ChatPage.route(), (route) => false);
+          .pushAndRemoveUntil(RegisterPage.route(), (_) => false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: preloader);
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
+    );
   }
 }
